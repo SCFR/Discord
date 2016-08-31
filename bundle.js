@@ -1,2 +1,2 @@
 require("./app/main.js");
-require("script!./vendor/mutation-summary.js");
+require("!style!css!sass!./app/sass/main.scss");

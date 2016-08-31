@@ -1,66 +1,35 @@
-StarCitizenFR.prototype.declareListener = function() {
-  require("script!../vendor/jquery.mutation-summary.js");
-  StarCitizenFR.$observerSummaryRoot = $(document);
-  StarCitizenFR.$observerSummaryRoot.mutationSummary("connect", StarCitizenFR.prototype.$Listener, [{ all: true }]);
-}
-
-StarCitizenFR.prototype.$Listener = function(summaries){
-
-  var listenedElems = [];
-  var modifs = summaries[0];
-
-  isElem = function(elem, type, id, className) {
-    elem = $(elem);
-    if(type && !elem.is(type)) return false;
-    if(id && elem.attr('id') !== id) return false;
-    if(className && !elem.hasClass(className)) return false;
-
-    return true;
-  }
-
-  ListenTo = function(on, callback, type, id, className) {
-    listenedElems.push({On: on, Callback: callback, elemType: type, elemId: id, elemClass: className});
-  }
-
-  checkForElemInArray = function(listenered, happendModifs) {
-    $.each(happendModifs, function(index, testElem) {
-      if(isElem(testElem, listenered.elemType, listenered.elemId, listenered.elemClass)) {
-        // callBack
-        listenered.Callback(testElem);
-
-        // Prevent checking this one again.
-        happendModifs.splice(index, 1);
-        return;
-      }
-    });
-  }
-
-  ListenTo("added", StarCitizenFR.prototype.addUserPopUpInfo , "div", false, "user-popout")
-
-  $.each(listenedElems, function(index, listener) {
-
-    if(listener.On === "added") {
-      checkForElemInArray(listener, modifs.added);
-    }
-
-  });
-
-}
-
-
 StarCitizenFR.prototype.addUserPopUpInfo = function(elem) {
   elem = $(elem);
-
+  var userID = BdApi.getUserIdByName(elem.find('span.username').html());
   var body = elem.find(".body");
-  body.append("<div class=\"section scfr_custom\"><div class=\"label\"><!-- react-text: 300 -->Regarde USS, Ca marche !<!-- /react-text --></div></div>");
 
+  StarCitizenFR.prototype.appendDirective(body, "<scfr-pop-out-user user='"+userID+"'></scfr-pop-out-user>");
+}
 
-  console.log(body);
+StarCitizenFR.prototype.appendDirective = function(elem, directive) {
+  return StarCitizenFR.prototype.callAngularFunction("scfr_main", "addDirective", {elem: elem, directive: directive});
 }
 
 StarCitizenFR.prototype.start = function () {
-  StarCitizenFR.prototype.declareListener();
+  StarCitizenFR.prototype.angularBootstrap();
+  StarCitizenFR.prototype.addSCFRStatus();
 };
+
+StarCitizenFR.prototype.addSCFRStatus = function() {
+  var account = $('.channels-wrap');
+  StarCitizenFR.prototype.appendDirective(account, "<scfr-user-scfr-status></scfr-user-scfr-status>");
+}
+
+StarCitizenFR.prototype.callAngularFunction = function(controller, func, args) {
+  var scope = $("[ng-controller='"+controller+"']").scope();
+  scope[func](args);
+  scope.$apply();
+}
+
+StarCitizenFR.prototype.angularBootstrap = function() {
+  $("#app-mount").attr("ng-controller", "scfr_main");
+  StarCitizenFR.$app = require("./app.js").app;
+}
 
 StarCitizenFR.prototype.load = function () {
 
@@ -83,6 +52,44 @@ StarCitizenFR.prototype.onSwitch = function () {
 
 StarCitizenFR.prototype.observer = function (e) {
   //raw MutationObserver event for each mutation
+  var listenedElems = [];
+  var modifs = e;
+
+  isElem = function(elem, type, id, className) {
+    elem = $(elem);
+    if(type && !elem.is(type)) return false;
+    if(id && elem.attr('id') !== id) return false;
+    if(className && !elem.hasClass(className)) return false;
+
+    return true;
+  }
+
+  ListenTo = function(on, callback, type, id, className) {
+    listenedElems.push({On: on, Callback: callback, elemType: type, elemId: id, elemClass: className});
+  }
+
+  checkForElemInArray = function(listenered, happendModifs) {
+    $.each(happendModifs, function(index, testElem) {
+      if(isElem(testElem, listenered.elemType, listenered.elemId, listenered.elemClass)) {
+        // callBack
+        listenered.Callback(testElem);
+        return;
+      }
+      else {
+        checkForElemInArray(listenered, testElem.childNodes);
+      }
+    });
+  }
+
+  ListenTo("added", StarCitizenFR.prototype.addUserPopUpInfo , "div", false, "user-popout")
+
+  $.each(listenedElems, function(index, listener) {
+
+    if(listener.On === "added") {
+      checkForElemInArray(listener, modifs.addedNodes);
+    }
+
+  });
 };
 
 StarCitizenFR.prototype.getSettingsPanel = function () {
