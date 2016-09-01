@@ -1,7 +1,7 @@
 var service = ['$http', '$q', function($http, $q) {
   var service = {};
 
-  var api_url = "https://98acba94.ngrok.io/wp-json/";
+  var api_url = "https://3bdce9eb.ngrok.io/wp-json/";
 
   service.user = {
     "isConnected": false,
@@ -29,6 +29,19 @@ var service = ['$http', '$q', function($http, $q) {
         service.user.info = p;
       }
     });
+  }
+
+  service.attemptLogin = function(username, password) {
+    var url = api_url + "Discord/Login";
+    var p = $http.get(url,{params: {username:username, password:password}}).then(function(data) {
+      console.log("login return");
+      console.log(data);
+      console.log(data.headers("Set-Cookie"));
+      $q.when(service.getUserInfo(), function(){console.log(service.user);})
+      return data;
+    });
+
+    return p;
   }
 
   init = function() {

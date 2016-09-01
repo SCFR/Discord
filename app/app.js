@@ -1,14 +1,17 @@
 require("script!../vendor/angular.min.js");
+require("script!../vendor/angular-cookies.min.js");
+
 app = angular.module('scfr', []);
 
+app.service('scfrAPI', require("exports?service!./service/API.js"));
 
+app.controller('modal-loggin', require("exports?controller!./controller/modal-loggin.js"));
 
 app.directive("scfrPopOutUser", require("exports?directive!./directive/pop-out-user.js"));
 app.directive("scfrUserScfrStatus", require("exports?directive!./directive/user-scfr-status.js"));
 app.directive("scfrModalBackground", require("exports?directive!./directive/modal-background.js"));
 app.directive("scfrModalLoggin", require("exports?directive!./directive/modal-loggin.js"));
 
-app.service('scfrAPI', require("exports?service!./service/API.js"));
 
 app.controller('scfr_main', ['$scope', '$compile', 'scfrAPI', function($scope, $compile, scfrAPI) {
   console.log("loaded controller");

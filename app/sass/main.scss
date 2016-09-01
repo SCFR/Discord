@@ -22,3 +22,43 @@
   z-index: 4;
   position:relative;
 }
+
+.scfr-alert {
+  .markdown-modal-header {
+    margin:0px;
+    height: 20px;
+    button.markdown-modal-close {
+      top: 20px;
+    }
+  }
+  .scroller-wrap {
+    position:relative;
+    .scroller {
+      padding:30px 0px;
+      img.full-width {
+        width:100%;
+      }
+      .padding-content {
+        padding:0px 40px;
+      }
+    }
+  }
+
+  .markdown-modal-footer {
+    padding: 0px 28px;
+    white-space: nowrap;
+  }
+}
+
+.form {
+  .control-group {
+    input[type=text], input[type=password] {
+      .novalidate {
+        border-bottom:2px solid orange;
+      }
+      .error {
+        border-bottom:2px solid red;
+      }
+    }
+  }
+}

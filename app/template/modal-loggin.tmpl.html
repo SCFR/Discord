@@ -1,7 +1,54 @@
 <div>
   <scfr-modal-background></scfr-modal-background>
-  <div class="scfr_modal_foreground modal">
-    <h3>Se connecter</h3>
-    <p>Je t'aime très fort.</p>
-  </div>
+
+  <div class="modal bda-alert scfr-alert" style="opacity:1">
+    <div class="modal-inner" style="box-shadow:0 0 8px -2px #000;">
+        <div class="markdown-modal">
+            <div class="markdown-modal-header">
+                <strong style="float:left"><span>StarCitizen.fr - </span><span>Login</span></strong>
+                <span></span>
+                <button class="markdown-modal-close" ng-click="quitModal()"></button>
+            </div>
+            <div class="scroller-wrap fade">
+                <div style="font-weight:700;white-space: normal;" class="scroller">
+                  <img src="//starcitizen.fr/wp-content/themes/FutureSpaceV6/images/logo.min.png"  style="width:100%; margin:auto;">
+
+                  <div class="padding-content">
+
+                    <p>Pour plus de sécurité, il est nécéssaire de se connecter à StarCitizen.fr
+                  pour accèder aux fonctionalités avancées de ce plugin.
+                  La procédure est relativement indolore.</p>
+
+                  <div class="form" style="width: auto;">
+                    <div class="control-group">
+                      <label for="scfr-login-username">Nom d'utilisateur</label>
+                      <input type="text" id="scfr-login-username" ng-model="login.username" ng-class="{novalidate: validate.username, error: error.username}">
+                      <em ng-show="error.username">Nom d'utilisateur inconnu</em>
+                    </div>
+                    <div class="control-group">
+                      <label for="settings-password">Mot de passe</label>
+                      <input type="password" id="scfr-login-password" ng-model="login.password" ng-class="{novalidate: validate.username, error: error.username}">
+                      <em ng-show="error.password">Le mot de passe ne correspond pas au nom d'utilisateur.</em>
+                    </div>
+
+                    <br />
+
+                    <div style='text-align:right;'>
+                      <button type="button" class="btn btn-primary" ng-click="doLogin()">Se connecter</button>
+                    </div>
+                  </div>
+
+                  </div>
+                </div>
+            </div>
+            <div class="markdown-modal-footer">
+              <p style="text-align:right">
+                Rejoignez <a href="https://discord.gg/3UUHrXZ" target="_blank">#Support</a> en cas de problème.
+              </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 </div>
