@@ -1,4 +1,4 @@
-var controller = ['$scope', 'scfrAPI', function($scope, scfrAPI) {
+var controller = ['$scope', 'MainAPI', function($scope, MainAPI) {
 
   $scope.login = {
     username:'',
@@ -21,7 +21,7 @@ var controller = ['$scope', 'scfrAPI', function($scope, scfrAPI) {
 
   $scope.doLogin = function() {
     if($scope.validate.username && $scope.validate.password) {
-      scfrAPI.attemptLogin($scope.login.username, $scope.login.password);
+      MainAPI.attemptLogin($scope.login.username, $scope.login.password);
     }
   }
 

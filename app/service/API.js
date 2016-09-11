@@ -1,8 +1,7 @@
 var service = ['$http', '$q', function($http, $q) {
   var service = {};
 
-  var api_url = "https://1524dae9.ngrok.io/wp-json/";
-
+  var api_url = window.SCFR_API;
   service.user = {
     "isConnected": false,
     "info": {},

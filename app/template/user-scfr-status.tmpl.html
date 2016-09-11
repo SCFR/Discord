@@ -1,7 +1,7 @@
 <div class="scfr_user_status">
   <img src="//starcitizen.fr/wp-content/themes/FutureSpaceV6/images/logo.min.png" class='logo'>
   <div class="label" ng-if="!api.user.isConnected" ng-click="popOutLoggin()">Se connecter à SC.FR</div>
-  <div class="label" ng-if="api.user.isConnected" ng-click="popOutLoggOut()">SC.FR : {{api.user.info.username}}</div>
+  <div class="label" ng-if="api.user.isConnected" ng-click="popOutLoggOut()">SC.FR : <span style="color:#{{api.user.info.user_colour}}">{{api.user.info.username}}</span></div>
 
   <div class="btn btn-login" ng-if="api.user.isConnected" ng-click="popOutLoggOut()"></div>
 </div>
