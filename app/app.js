@@ -17,7 +17,11 @@ app.controller('scfr_main', ['$scope', '$compile', 'scfrAPI', function($scope, $
   console.log("loaded controller");
   var modal_parent = $("[ng-controller='scfr_main'] > div > span:not(.incoming-calls)");
 
-  $scope.user = scfrAPI.user;
+  $scope.api = scfrAPI;
+
+  $scope.$watch("api", function(val) {
+    console.log(val);
+  });
 
   $scope.addDirective = function(args) {
     var newElement = $compile( args.directive )( $scope );

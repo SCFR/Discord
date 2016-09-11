@@ -21,7 +21,6 @@ var controller = ['$scope', 'scfrAPI', function($scope, scfrAPI) {
 
   $scope.doLogin = function() {
     if($scope.validate.username && $scope.validate.password) {
-      console.log("attempt");
       scfrAPI.attemptLogin($scope.login.username, $scope.login.password);
     }
   }
