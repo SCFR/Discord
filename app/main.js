@@ -3,14 +3,27 @@ StarCitizenFR.prototype.addUserPopUpInfo = function(elem) {
   var userID = BdApi.getUserIdByName(elem.find('span.username').html());
   var body = elem.find(".body");
 
-  console.log("append");
-  console.log(userID[0]);
-  console.log("____");
   StarCitizenFR.prototype.appendDirective(body, "<scfr-pop-out-user user='"+userID[0]+"'></scfr-pop-out-user>");
 }
 
 StarCitizenFR.prototype.addMainSettings = function(elem) {
   StarCitizenFR.prototype.callAngularFunction("scfr_main","addMainSettings",elem);
+}
+
+StarCitizenFR.prototype.getUserIdByAvatar = function(avatar) {
+  var a = $(avatar).css("background-image");
+  return a.match(/\d+/);
+}
+
+StarCitizenFR.prototype.hookMemberStatus = function(elem) {
+  var user_id = StarCitizenFR.prototype.getUserIdByAvatar( $(elem).find(".avatar-small") )[0];
+  StarCitizenFR.prototype.appendDirective(elem, "<scfr-channel-member-user user='"+user_id+"'></scfr-channel-member-user>");
+}
+
+StarCitizenFR.prototype.hookAllMembersStatus = function() {
+  $("div.member.member-status").each(function() {
+    StarCitizenFR.prototype.hookMemberStatus($(this));
+  });
 }
 
 StarCitizenFR.prototype.appendDirective = function(elem, directive) {
@@ -20,6 +33,7 @@ StarCitizenFR.prototype.appendDirective = function(elem, directive) {
 StarCitizenFR.prototype.start = function () {
   StarCitizenFR.prototype.angularBootstrap();
   StarCitizenFR.prototype.addSCFRStatus();
+  StarCitizenFR.prototype.hookAllMembersStatus();
 };
 
 StarCitizenFR.prototype.addSCFRStatus = function() {
@@ -83,10 +97,11 @@ StarCitizenFR.prototype.observer = function (e) {
         checkForElemInArray(listenered, testElem.childNodes);
       }
     });
-  }
+  };
 
-  ListenTo("added", StarCitizenFR.prototype.addUserPopUpInfo , "div", false, "user-popout")
-  ListenTo("added", StarCitizenFR.prototype.addMainSettings , "form", false, "user-settings-modal")
+  ListenTo("added", StarCitizenFR.prototype.addUserPopUpInfo , "div", false, "user-popout");
+  ListenTo("added", StarCitizenFR.prototype.addMainSettings , "form", false, "user-settings-modal");
+  ListenTo("added", StarCitizenFR.prototype.hookMemberStatus , "div", false, "member-status");
 
   $.each(listenedElems, function(index, listener) {
 
