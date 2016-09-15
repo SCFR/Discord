@@ -1,6 +1,9 @@
 <div>
   <div class="section scfr_custom">
     <div class="label"> <span class="icon"><img src="//starcitizen.fr/Discord/icons/aa.svg" style="width:100%;margin:auto;"></span> StarCitizen.FR</div>
-    <div class="scfr_content"><p>{{userInfo || json}}</p></div>
+    <div class="scfr_content">
+      <p class='warn' ng-if="uAPI.users[user] === 'NOT_REGISTERED'">Ce joueur n'est pas inscrit sur www.starcitizen.fr</p>
+      <p class='' ng-if="uAPI.users[user] !== 'NOT_REGISTERED'">Display info</p>
+    </div>
   </div>
 </div>

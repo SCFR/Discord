@@ -3,7 +3,14 @@ StarCitizenFR.prototype.addUserPopUpInfo = function(elem) {
   var userID = BdApi.getUserIdByName(elem.find('span.username').html());
   var body = elem.find(".body");
 
-  StarCitizenFR.prototype.appendDirective(body, "<scfr-pop-out-user user='"+userID+"'></scfr-pop-out-user>");
+  console.log("append");
+  console.log(userID[0]);
+  console.log("____");
+  StarCitizenFR.prototype.appendDirective(body, "<scfr-pop-out-user user='"+userID[0]+"'></scfr-pop-out-user>");
+}
+
+StarCitizenFR.prototype.addMainSettings = function(elem) {
+  StarCitizenFR.prototype.callAngularFunction("scfr_main","addMainSettings",elem);
 }
 
 StarCitizenFR.prototype.appendDirective = function(elem, directive) {
@@ -35,12 +42,9 @@ StarCitizenFR.prototype.load = function () {
 
 };
 
-StarCitizenFR.prototype.unload = function () {}
-;
+StarCitizenFR.prototype.unload = function () {};
 
-StarCitizenFR.prototype.stop = function () {
-  StarCitizenFR.$observerSummaryRoot.mutationSummary("disconnect");
-};
+StarCitizenFR.prototype.stop = function () {};
 
 StarCitizenFR.prototype.onMessage = function () {
   //called when a message iaaa received
@@ -82,6 +86,7 @@ StarCitizenFR.prototype.observer = function (e) {
   }
 
   ListenTo("added", StarCitizenFR.prototype.addUserPopUpInfo , "div", false, "user-popout")
+  ListenTo("added", StarCitizenFR.prototype.addMainSettings , "form", false, "user-settings-modal")
 
   $.each(listenedElems, function(index, listener) {
 

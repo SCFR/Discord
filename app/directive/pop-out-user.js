@@ -4,7 +4,7 @@ var directive = function() {
     restrict:'E',
     controller:'popout-user',
     scope: {
-      user:'=',
+      user:'@',
     },
     replace: true,
   };

@@ -1,7 +1,8 @@
 var controller = ['$scope', 'UsersAPI', function($scope, UsersAPI) {
-
-  $scope.users = UsersAPI;
-
-  $scope.userInfo = $scope.users.getUserInfo($scope.user);
+  console.log("scope");
+  console.log($scope.user);
+  console.log("_____");
+  UsersAPI.getUserInfo($scope.user);
+  $scope.uAPI = UsersAPI;
 
 }];
