@@ -4,31 +4,33 @@ StarCitizenFR.prototype.addUserPopUpInfo = function(elem) {
   var body = elem.find(".body");
 
   StarCitizenFR.prototype.appendDirective(body, "<scfr-pop-out-user user='"+userID[0]+"'></scfr-pop-out-user>");
-}
+};
 
 StarCitizenFR.prototype.addMainSettings = function(elem) {
   StarCitizenFR.prototype.callAngularFunction("scfr_main","addMainSettings",elem);
-}
+};
 
 StarCitizenFR.prototype.getUserIdByAvatar = function(avatar) {
   var a = $(avatar).css("background-image");
   return a.match(/\d+/);
-}
+};
 
 StarCitizenFR.prototype.hookMemberStatus = function(elem) {
-  var user_id = StarCitizenFR.prototype.getUserIdByAvatar( $(elem).find(".avatar-small") )[0];
-  StarCitizenFR.prototype.appendDirective(elem, "<scfr-channel-member-user user='"+user_id+"'></scfr-channel-member-user>");
-}
+  if(elem) {
+    var user_id = StarCitizenFR.prototype.getUserIdByAvatar( $(elem).find(".avatar-small") )[0];
+    StarCitizenFR.prototype.appendDirective(elem, "<scfr-channel-member-user user='"+user_id+"'></scfr-channel-member-user>");
+  }
+};
 
 StarCitizenFR.prototype.hookAllMembersStatus = function() {
   $("div.member.member-status").each(function() {
     StarCitizenFR.prototype.hookMemberStatus($(this));
   });
-}
+};
 
 StarCitizenFR.prototype.appendDirective = function(elem, directive) {
   return StarCitizenFR.prototype.callAngularFunction("scfr_main", "addDirective", {elem: elem, directive: directive});
-}
+};
 
 StarCitizenFR.prototype.start = function () {
   StarCitizenFR.prototype.angularBootstrap();
@@ -39,18 +41,18 @@ StarCitizenFR.prototype.start = function () {
 StarCitizenFR.prototype.addSCFRStatus = function() {
   var account = $('.channels-wrap');
   StarCitizenFR.prototype.appendDirective(account, "<scfr-user-scfr-status></scfr-user-scfr-status>");
-}
+};
 
 StarCitizenFR.prototype.callAngularFunction = function(controller, func, args) {
   var scope = $("[ng-controller='"+controller+"']").scope();
   scope[func](args);
   scope.$apply();
-}
+};
 
 StarCitizenFR.prototype.angularBootstrap = function() {
   $("#app-mount").attr("ng-controller", "scfr_main");
   StarCitizenFR.$app = require("./app.js").app;
-}
+};
 
 StarCitizenFR.prototype.load = function () {
 
@@ -80,11 +82,11 @@ StarCitizenFR.prototype.observer = function (e) {
     if(className && !elem.hasClass(className)) return false;
 
     return true;
-  }
+  };
 
   ListenTo = function(on, callback, type, id, className) {
     listenedElems.push({On: on, Callback: callback, elemType: type, elemId: id, elemClass: className});
-  }
+  };
 
   checkForElemInArray = function(listenered, happendModifs) {
     $.each(happendModifs, function(index, testElem) {
@@ -110,6 +112,8 @@ StarCitizenFR.prototype.observer = function (e) {
     }
 
   });
+
+  console.log(modifs);
 };
 
 StarCitizenFR.prototype.getSettingsPanel = function () {

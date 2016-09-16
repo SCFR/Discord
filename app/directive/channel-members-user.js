@@ -1,6 +1,6 @@
 var directive = function() {
   return {
-    template: require("html!../template/channel-members-user.tmpl.html"),
+    template: require("html!../template/member-list/member-status.tmpl.html"),
     restrict:'E',
     controller:'channel-members-user',
     scope: {

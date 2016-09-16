@@ -17,13 +17,13 @@ var service = ['$http', '$q', 'MainAPI', function($http, $q, MainAPI) {
     });
 
     service.users[discord_id] = $q.defer();
-  }
+  };
 
   service.getUserInfo = function(discord_id, force) {
     console.log(discord_id);
     if(!service.users[discord_id] || force) service.users[discord_id] = fetchUser(discord_id);
     //return service.users[discord_id];
-  }
+  };
 
   return service;
 }];

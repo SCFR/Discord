@@ -5,16 +5,16 @@ var service = ['$http', '$q', function($http, $q) {
   service.user = {
     "isConnected": false,
     "info": {},
-  }
+  };
 
   service.userIsConnected = function() {
     var url   = api_url + "Discord/IsValidToken";
     var p     = $http.get(url,{params: { 'scfr-token': service.scfrToken }}).then( function(data) {
-      if(data.data.error == false && data.data.msg == "USER_IS_LOGGED_IN") service.user.isConnected = true;
+      if(data.data.error === false && data.data.msg == "USER_IS_LOGGED_IN") service.user.isConnected = true;
       else service.user.isConnected = false;
     });
     service.user.isConnected = p;
-  }
+  };
 
   service.getUserInfo = function() {
     var url = api_url + "Discord/GetUserInfo/";
@@ -28,7 +28,7 @@ var service = ['$http', '$q', function($http, $q) {
         service.user.info = p;
       }
     });
-  }
+  };
 
   service.attemptLogin = function(username, password) {
     var url = api_url + "Discord/Login";
@@ -41,12 +41,12 @@ var service = ['$http', '$q', function($http, $q) {
     });
 
     return p;
-  }
+  };
 
   service.setNewToken = function(token) {
     service.scfrToken = token;
     $.cookie("scfr-token", token, { expires: 365, path: '/' });
-  }
+  };
 
   handleAuth = function() {
     var cookie = $.cookie("scfr-token");
@@ -58,12 +58,12 @@ var service = ['$http', '$q', function($http, $q) {
     else {
 
     }
-  }
+  };
 
   init = function() {
     console.log("SCFR API init");
     handleAuth();
-  }
+  };
 
   init();
 

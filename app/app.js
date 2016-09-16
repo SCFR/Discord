@@ -1,7 +1,7 @@
 require("script!../vendor/angular.min.js");
 require("script!../vendor/angular-cookies.min.js");
 
-window.SCFR_API = "https://f1935859.ngrok.io/wp-json/";
+window.SCFR_API = "https://9593719f.ngrok.io/wp-json/";
 app = angular.module('scfr', []);
 
 app.service('MainAPI', require("exports?service!./service/API.js"));
@@ -35,27 +35,29 @@ app.controller('scfr_main', ['$scope', '$compile', 'MainAPI', function($scope, $
   });
 
   $scope.addDirective = function(args) {
-    var newElement = $compile( args.directive )( $scope );
-    args.elem.append( newElement );
+    if(args.elem && args.directive) {
+      var newElement = $compile( args.directive )( $scope );
+      $(args.elem).append( newElement );
 
-    console.log(args);
-  }
+      console.log(args);
+    }
+  };
 
   $scope.popOutLoggin = function() {
     console.log("clicked!");
     $scope.addDirective({elem: modal_parent, directive:"<scfr-modal-loggin></scfr-modal-loggin>"});
-  }
+  };
 
   $scope.quitModal = function() {
     modal_parent.html("");
-  }
+  };
 
   $scope.addMainSettings = function(elem) {
     $scope._settingsPanel = elem;
     var lastLeft = $(elem).find('.change-log-button-container');
     var newElement = $compile( "<div class='tab-bar-item' id='scfr-settings-tab' ng-click='displayMainSettings()'>StarCitizen.fr</div>" )( $scope );
     $(newElement).insertBefore(lastLeft);
-  }
+  };
 
 
   $scope.displayMainSettings = function() {
@@ -70,7 +72,7 @@ app.controller('scfr_main', ['$scope', '$compile', 'MainAPI', function($scope, $
 
     right.html("");
     $scope.addDirective({directive:'<scfr-settings></scfr-settings>',elem: right});
-  }
+  };
 
 
 }]);

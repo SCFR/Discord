@@ -23,6 +23,6 @@ var controller = ['$scope', 'MainAPI', function($scope, MainAPI) {
     if($scope.validate.username && $scope.validate.password) {
       MainAPI.attemptLogin($scope.login.username, $scope.login.password);
     }
-  }
+  };
 
 }];
