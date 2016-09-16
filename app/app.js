@@ -75,6 +75,13 @@ app.controller('scfr_main', ['$scope', '$compile', 'MainAPI', function($scope, $
   };
 
 
+  $scope.broadcast = function(p) {
+    if(p.event) {
+      $scope.$broadcast(p.event, p.args);
+    }
+  };
+
+
 }]);
 
 

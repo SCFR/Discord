@@ -16,7 +16,7 @@ StarCitizenFR.prototype.getUserIdByAvatar = function(avatar) {
 };
 
 StarCitizenFR.prototype.hookMemberStatus = function(elem) {
-  if(elem) {
+  if(elem && !$(elem).find(".scfr-member-status").html() ? true : false) {
     var user_id = StarCitizenFR.prototype.getUserIdByAvatar( $(elem).find(".avatar-small") )[0];
     StarCitizenFR.prototype.appendDirective(elem, "<scfr-channel-member-user user='"+user_id+"'></scfr-channel-member-user>");
   }
@@ -26,6 +26,15 @@ StarCitizenFR.prototype.hookAllMembersStatus = function() {
   $("div.member.member-status").each(function() {
     StarCitizenFR.prototype.hookMemberStatus($(this));
   });
+};
+
+
+StarCitizenFR.prototype.memberActivity = function(elem, modifs) {
+    var user_id = StarCitizenFR.prototype.getUserIdByAvatar( $(elem).parents(".member-status").find(".avatar-small") )[0];
+
+    console.log(modifs);
+
+    return StarCitizenFR.prototype.callAngularFunction("scfr_main", "broadcast", {event: "memberActivity", args: user_id});
 };
 
 StarCitizenFR.prototype.appendDirective = function(elem, directive) {
@@ -92,7 +101,7 @@ StarCitizenFR.prototype.observer = function (e) {
     $.each(happendModifs, function(index, testElem) {
       if(isElem(testElem, listenered.elemType, listenered.elemId, listenered.elemClass)) {
         // callBack
-        listenered.Callback(testElem);
+        listenered.Callback(testElem, modifs);
         return;
       }
       else {
@@ -105,15 +114,21 @@ StarCitizenFR.prototype.observer = function (e) {
   ListenTo("added", StarCitizenFR.prototype.addMainSettings , "form", false, "user-settings-modal");
   ListenTo("added", StarCitizenFR.prototype.hookMemberStatus , "div", false, "member-status");
 
+  ListenTo("added", StarCitizenFR.prototype.memberActivity , "div", false, "member-activity");
+  ListenTo("removed", StarCitizenFR.prototype.memberActivity , "div", false, "member-activity");
+
   $.each(listenedElems, function(index, listener) {
 
     if(listener.On === "added") {
       checkForElemInArray(listener, modifs.addedNodes);
+      checkForElemInArray(listener, modifs.removedNodes);
     }
 
   });
 
-  console.log(modifs);
+  //console.log(modifs);
+//removedNodes:
+//div.member-activity
 };
 
 StarCitizenFR.prototype.getSettingsPanel = function () {

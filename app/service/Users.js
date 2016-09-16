@@ -1,28 +1,54 @@
 // MAIN USERS SERVICE
 // HOLDS SC.FR INFORMATION FOR ALL DISCORD USER ACROSS SERVERS.
+// AND HOLDS ORGS ASWELL
 var service = ['$http', '$q', 'MainAPI', function($http, $q, MainAPI) {
   var service = {
     users: {},
+    orgs: {},
   };
 
   var api_url = window.SCFR_API;
 
   fetchUser = function(discord_id) {
-    console.log(discord_id);
     var url   = api_url + "Discord/User/"+discord_id;
 
-    $http.get(url,{params:{'scfr-token': MainAPI.scfrToken}}).then(function(data) {
-      if(data.data && data.data.error === false) service.users[discord_id] = data;
+    var p = $http.get(url,{params:{'scfr-token': MainAPI.scfrToken}}).success(function(data) {
+      if(data && data.error === false) service.users[discord_id] = handleUserData(data.msg);
       else service.users[discord_id] = "NOT_REGISTERED";
+
+      return service.users[discord_id];
+    });
+    return p;
+  };
+
+  fetchOrg = function(ssid) {
+    var url   = api_url + "Discord/Org/"+ssid;
+
+    $http.get(url,{params:{'scfr-token': MainAPI.scfrToken}}).then(function(data) {
+      if(data.data && data.data.error === false) service.orgs[ssid] = data;
+      else service.orgs[ssid] = "NOT_REGISTERED";
     });
 
-    service.users[discord_id] = $q.defer();
+    service.orgs[ssid] = $q.defer();
+  };
+
+  handleUserData = function(data) {
+    if(data.org.SSID) {
+      var sid = data.org.SSID;
+      service.orgs[data.org.SSID] = data.org;
+      data.org = sid;
+    }
+    return data;
   };
 
   service.getUserInfo = function(discord_id, force) {
-    console.log(discord_id);
-    if(!service.users[discord_id] || force) service.users[discord_id] = fetchUser(discord_id);
-    //return service.users[discord_id];
+    if(!service.users[discord_id] || force) return fetchUser(discord_id);
+    return service.users[discord_id];
+  };
+
+  service.getOrgInfo = function(ssid, force) {
+    if(!service.orgs[ssid] || force) service.orgs[ssid] = fetcOrg(ssid);
+    return service.orgs[ssid];
   };
 
   return service;
