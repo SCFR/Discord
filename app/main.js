@@ -31,31 +31,33 @@ StarCitizenFR.prototype.hookAllMembersStatus = function() {
 
 StarCitizenFR.prototype.memberActivity = function(elem, modifs) {
     var user_id = StarCitizenFR.prototype.getUserIdByAvatar( $(elem).parents(".member-status").find(".avatar-small") )[0];
-
-    console.log(modifs);
-
     return StarCitizenFR.prototype.callAngularFunction("scfr_main", "broadcast", {event: "memberActivity", args: user_id});
 };
 
-StarCitizenFR.prototype.appendDirective = function(elem, directive) {
-  return StarCitizenFR.prototype.callAngularFunction("scfr_main", "addDirective", {elem: elem, directive: directive});
+StarCitizenFR.prototype.appendDirective = function(elem, directive, force) {
+  return StarCitizenFR.prototype.callAngularFunction("scfr_main", "addDirective", {elem: elem, directive: directive, force: force});
 };
 
 StarCitizenFR.prototype.start = function () {
   StarCitizenFR.prototype.angularBootstrap();
   StarCitizenFR.prototype.addSCFRStatus();
+
+  //StarCitizenFR.prototype.appBootStrap();
+};
+
+StarCitizenFR.prototype.appBootStrap = function() {
   StarCitizenFR.prototype.hookAllMembersStatus();
 };
 
 StarCitizenFR.prototype.addSCFRStatus = function() {
   var account = $('.channels-wrap');
-  StarCitizenFR.prototype.appendDirective(account, "<scfr-user-scfr-status></scfr-user-scfr-status>");
+  StarCitizenFR.prototype.appendDirective(account, "<scfr-user-scfr-status></scfr-user-scfr-status>", true);
 };
 
 StarCitizenFR.prototype.callAngularFunction = function(controller, func, args) {
   var scope = $("[ng-controller='"+controller+"']").scope();
   scope[func](args);
-  scope.$apply();
+  if(!scope.$$phase) scope.$apply();
 };
 
 StarCitizenFR.prototype.angularBootstrap = function() {

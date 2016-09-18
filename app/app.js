@@ -34,28 +34,63 @@ app.directive("scfrSettingsControlGroup", require("exports?directive!./directive
 app.directive("scfrChannelMemberUser", require("exports?directive!./directive/channel-members-user.js"));
 
 
-app.controller('scfr_main', ['$scope', '$compile', 'MainAPI', function($scope, $compile, MainAPI) {
+app.controller('scfr_main', ['$scope', '$compile', 'MainAPI', '$q', function($scope, $compile, MainAPI, $q) {
   console.log("loaded controller");
   var modal_parent = $("[ng-controller='scfr_main'] > div > span:not(.incoming-calls)");
 
   $scope.api = MainAPI;
 
-  $scope.$watch("api.user.isConnected", function(val) {
-    console.log("connected: " + val);
-  }, true);
+  var scfrIsbs = false;
+
+  var childrenDirectives = [];
+
+
+  $scope.$watch('api.user.isConnected', function(val) {
+    if(val === true && scfrIsbs === false) {
+      scfrIsbs = true;
+      StarCitizenFR.prototype.appBootStrap();
+    }
+
+    if(val === false && scfrIsbs === true) {
+      scfrIsbs = false;
+      unBootStrap();
+    }
+  });
+
+  shouldAddDirective = function() {
+    return $scope.api.user.isConnected;
+  };
+
+  stockElement = function(elem) {
+    childrenDirectives.push(elem);
+  };
+
+  unBootStrap = function() {
+    angular.forEach(childrenDirectives, function(elem) {
+        var scope = $(elem).scope();
+        if(scope) {
+          //scope.$destroy();
+          elem.remove();
+        }
+    });
+  };
 
   $scope.addDirective = function(args) {
     if(args.elem && args.directive) {
-      var newElement = $compile( args.directive )( $scope );
-      $(args.elem).append( newElement );
+      $q.when(shouldAddDirective()).then(function(isConnected) {
+        if(isConnected || args.force) {
+          var newElement = $compile( args.directive )( $scope );
 
-      console.log(args);
+          if(args.force !== true) stockElement(newElement);
+
+          $(args.elem).append( newElement );
+        }
+      });
     }
   };
 
   $scope.popOutLoggin = function() {
-    console.log("clicked!");
-    $scope.addDirective({elem: modal_parent, directive:"<scfr-modal-login></scfr-modal-login>"});
+    $scope.addDirective({elem: modal_parent, directive:"<scfr-modal-login></scfr-modal-login>", force: true});
   };
 
   $scope.popOutLoggOut = function() {
@@ -73,7 +108,6 @@ app.controller('scfr_main', ['$scope', '$compile', 'MainAPI', function($scope, $
     $(newElement).insertBefore(lastLeft);
   };
 
-
   $scope.displayMainSettings = function() {
     $(".tab-bar-item").removeClass("selected");
 
@@ -88,10 +122,12 @@ app.controller('scfr_main', ['$scope', '$compile', 'MainAPI', function($scope, $
     $scope.addDirective({directive:'<scfr-settings></scfr-settings>',elem: right});
   };
 
-
   $scope.broadcast = function(p) {
     if(p.event) {
-      $scope.$broadcast(p.event, p.args);
+
+      $q.when(shouldAddDirective()).then(function(isConnected) {
+        if(isConnected || args.force) $scope.$broadcast(p.event, p.args);
+      });
     }
   };
 
