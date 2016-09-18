@@ -6,6 +6,7 @@ var service = ['$http', '$q', function($http, $q) {
     "isConnected": false,
     "info": {},
   };
+  defaultUser = angular.copy(service.user);
 
   service.userIsConnected = function() {
     var url   = api_url + "Discord/IsValidToken";
@@ -35,12 +36,25 @@ var service = ['$http', '$q', function($http, $q) {
     var p = $http.get(url,{params: {username:username, password:password}}).then(function(data) {
       if(data.data.error === false && data.data.msg.status == "USER_TOKEN") {
         service.setNewToken(data.data.msg.token);
-        $q.when(service.getUserInfo(), function(){console.log(service.user);});
+        service.user.isConnected = true;
+        $q.when(service.getUserInfo(), function(){});
+        return true;
       }
-      return data;
+      return data.data;
     });
 
     return p;
+  };
+
+  service.logOut = function() {
+    console.log("logout");
+    if($.removeCookie("scfr-token", {path: '/'})) {
+      service.user = angular.copy(defaultUser);
+        console.log("is ok");
+          console.log(service.user);
+      return true;
+    }
+    return false;
   };
 
   service.setNewToken = function(token) {

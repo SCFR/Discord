@@ -9,11 +9,35 @@
   padding: 10px 5px;
   color:#fff;
   font-size:14px;
+  height: auto;
+  position:relative;
+
+  .connect {
+    cursor:pointer;
+  }
 
   img.logo {
     width:50px;
     float:left;
   }
+
+  .btn {
+    position: absolute;
+    right: 12px;
+    border-radius: 3px;
+    border: 1px solid rgb(28, 30, 34);
+    cursor:pointer;
+    &.btn-logout {
+      &:after {
+        opacity:0.4;
+        background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE3LjEuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHZpZXdCb3g9IjAgMCAxNiAxNiIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgMTYgMTYiIHhtbDpzcGFjZT0icHJlc2VydmUiPgo8ZyBpZD0iaW50ZXJmYWNlXy1fbG9naW5fZW50ZXIiPgoJPGc+CgkJPHBhdGggZmlsbD0iIzg3OTA5QyIgZD0iTTEzLDEzLjVjMCwwLjMtMC4yLDAuNS0wLjUsMC41aC0xMUMxLjIsMTQsMSwxMy44LDEsMTMuNXYtMTJDMSwxLjIsMS4yLDEsMS41LDFoMTFDMTIuOCwxLDEzLDEuMiwxMywxLjUKCQkJVjRoMVYxYzAtMC42LTAuNC0xLTEtMUgxQzAuNCwwLDAsMC40LDAsMXYxM2MwLDAuNiwwLjQsMSwxLDFoMTJjMC42LDAsMS0wLjQsMS0xdi0zaC0xVjEzLjV6IE0xNS41LDdIMy43bDMuMi0zLjIKCQkJQzcsMy42LDcsMy4zLDYuOSwzLjFDNi43LDMsNi40LDMsNi4yLDMuMWwtNCw0YzAsMCwwLDAtMC4xLDBDMiw3LjIsMiw3LjQsMiw3LjVsMCwwbDAsMGMwLDAuMSwwLDAuMywwLjEsMC40YzAsMCwwLDAsMC4xLDBsNCw0CgkJCWMwLjIsMC4yLDAuNSwwLjIsMC43LDBzMC4yLTAuNSwwLTAuN0wzLjcsOGgxMS44QzE1LjgsOCwxNiw3LjgsMTYsNy41UzE1LjgsNywxNS41LDd6Ii8+Cgk8L2c+CjwvZz4KPC9zdmc+Cg==)
+      }
+      &:hover:after {
+        opacity:1;
+      }
+    }
+  }
+
 }
 
 .scfr_modal_background {
@@ -43,6 +67,7 @@
       }
       .padding-content {
         padding:0px 40px;
+        text-align:justify;
       }
     }
   }
@@ -56,10 +81,10 @@
 .form {
   .control-group {
     input[type=text], input[type=password] {
-      .novalidate {
+      &.novalidate {
         border-bottom:2px solid orange;
       }
-      .error {
+      &.error {
         border-bottom:2px solid red;
       }
     }
