@@ -25,18 +25,18 @@ var service = ['$http', '$q', 'MainAPI', function($http, $q, MainAPI) {
     }
 
     canBeginWatch = true;
-  }
+  };
 
   service.setCurrentCookie = function() {
     console.log("saving :");
     console.log(service.settings);
     $.cookie(cookie_name, service.settings, { expires: 3650, path: '/' });
-  }
+  };
 
   service.getSetting = function(settingName) {
     // Return value and not reference
     return angular.copy(service.settings[settingName]);
-  }
+  };
 
   init();
 

@@ -9,6 +9,7 @@ var controller = ['$scope', 'MainAPI', 'UsersAPI', '$q', '$element', '$timeout',
   $scope.hasActivity = false;
 
 
+
   getApiData = function() {
     $q.when(UsersAPI.getUserInfo($scope.user)).then(function(){
       $scope.currentUser = UsersAPI.users[$scope.user];

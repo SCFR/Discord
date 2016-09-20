@@ -46,8 +46,14 @@ StarCitizenFR.prototype.start = function () {
   //StarCitizenFR.prototype.appBootStrap();
 };
 
+StarCitizenFR.prototype.hookSearchBar = function() {
+  console.log(":( i'm so sad");
+  StarCitizenFR.prototype.appendDirective($('.channel-members-wrap'), "<scfr-channel-member-search></scfr-channel-member-search>");
+};
+
 StarCitizenFR.prototype.appBootStrap = function() {
   StarCitizenFR.prototype.hookAllMembersStatus();
+  StarCitizenFR.prototype.hookSearchBar();
 };
 
 StarCitizenFR.prototype.addSCFRStatus = function() {

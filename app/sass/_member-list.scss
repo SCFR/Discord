@@ -19,6 +19,8 @@
     .scfr-org-logo > img {opacity:0.9;}
   }
 }
-.channel-members .member {
-  position:relative;
+.channel-members-wrap {
+  .channel-members .member {
+    position:relative;
+  }
 }

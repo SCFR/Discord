@@ -13,6 +13,7 @@ app.controller('modal-logout', require("exports?controller!./controller/modal-lo
 app.controller('popout-user', require("exports?controller!./controller/popout-user.js"));
 app.controller('settings', require("exports?controller!./controller/settings.js"));
 app.controller('channel-members-user', require("exports?controller!./controller/channel-members-user.js"));
+app.controller('channel-members-search', require("exports?controller!./controller/channel-members-search.js"));
 
 app.directive("scfrPopOutUser", require("exports?directive!./directive/pop-out-user.js"));
 app.directive("scfrUserScfrStatus", require("exports?directive!./directive/user-scfr-status.js"));
@@ -31,7 +32,8 @@ app.directive("scfrSettings", require("exports?directive!./directive/settings.js
 app.directive("scfrSettingsCheckboxGroup", require("exports?directive!./directive/settings/checkbox-group.js"));
 app.directive("scfrSettingsCheckbox", require("exports?directive!./directive/settings/checkbox.js"));
 app.directive("scfrSettingsControlGroup", require("exports?directive!./directive/settings/control-group.js"));
-app.directive("scfrChannelMemberUser", require("exports?directive!./directive/channel-members-user.js"));
+app.directive("scfrChannelMemberUser", require("exports?directive!./directive/member-list/channel-members-user.js"));
+app.directive("scfrChannelMemberSearch", require("exports?directive!./directive/member-list/channel-members-search.js"));
 
 
 app.controller('scfr_main', ['$scope', '$compile', 'MainAPI', '$q', function($scope, $compile, MainAPI, $q) {
