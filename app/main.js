@@ -1,23 +1,24 @@
 StarCitizenFR.prototype.addUserPopUpInfo = function(elem) {
   elem = $(elem);
-  var userID = BdApi.getUserIdByName(elem.find('span.username').html());
+  var userID = StarCitizenFR.prototype.getUserIdyElem(elem);
   var body = elem.find(".body");
 
-  StarCitizenFR.prototype.appendDirective(body, "<scfr-pop-out-user user='"+userID[0]+"'></scfr-pop-out-user>");
+  StarCitizenFR.prototype.appendDirective(body, "<scfr-pop-out-user user='"+userID+"'></scfr-pop-out-user>");
+};
+
+StarCitizenFR.prototype.getUserIdyElem = function(elem) {
+  var props = SCFRFindReact.getProps(elem);
+  if(props && props.user) return props.user.id;
+  return null;
 };
 
 StarCitizenFR.prototype.addMainSettings = function(elem) {
   StarCitizenFR.prototype.callAngularFunction("scfr_main","addMainSettings",elem);
 };
 
-StarCitizenFR.prototype.getUserIdByAvatar = function(avatar) {
-  var a = $(avatar).css("background-image");
-  return a.match(/\d+/);
-};
-
 StarCitizenFR.prototype.hookMemberStatus = function(elem) {
   if(elem && !$(elem).find(".scfr-member-status").html() ? true : false) {
-    var user_id = StarCitizenFR.prototype.getUserIdByAvatar( $(elem).find(".avatar-small") )[0];
+    var user_id = StarCitizenFR.prototype.getUserIdyElem( elem );
     StarCitizenFR.prototype.appendDirective(elem, "<scfr-channel-member-user user='"+user_id+"'></scfr-channel-member-user>");
   }
 };
@@ -30,7 +31,7 @@ StarCitizenFR.prototype.hookAllMembersStatus = function() {
 
 
 StarCitizenFR.prototype.memberActivity = function(elem, modifs) {
-    var user_id = StarCitizenFR.prototype.getUserIdByAvatar( $(elem).parents(".member-status").find(".avatar-small") )[0];
+    var user_id = StarCitizenFR.prototype.getUserIdyElem( elem );
     return StarCitizenFR.prototype.callAngularFunction("scfr_main", "broadcast", {event: "memberActivity", args: user_id});
 };
 

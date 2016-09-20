@@ -1,7 +1,7 @@
 require("script!../vendor/angular.min.js");
 require("script!../vendor/angular-cookies.min.js");
 
-window.SCFR_API = "https://23e5e5a3.ngrok.io/wp-json/";
+window.SCFR_API = "https://c303f385.ngrok.io/wp-json/";
 app = angular.module('scfr', []);
 
 app.service('MainAPI', require("exports?service!./service/API.js"));
