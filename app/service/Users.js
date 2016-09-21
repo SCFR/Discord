@@ -32,8 +32,27 @@ var service = ['$http', '$q', 'MainAPI', function($http, $q, MainAPI) {
     service.orgs[ssid] = $q.defer();
   };
 
+  service.getUsersInGuild = function(ssid) {
+
+  };
+
+  service.getGuildsBySSIDOrName = function(value) {
+
+  };
+
+  service.getRegisteredUser = function(discord_id) {
+    if(service.users[discord_id] && service.users[discord_id] !== "NOT_REGISTERED") return service.users[discord_id];
+    return false;
+  };
+
+  service.getRegisteredUserOrg = function(discord_id) {
+    var user = service.getRegisteredUser(discord_id);
+    if(user && user.org && service.orgs[user.org] && service.orgs[user.org] !== "NOT_REGISTERED") return service.orgs[user.org];
+    return false;
+  };
+
   handleUserData = function(data) {
-    if(data.org.SSID) {
+    if(data.org && data.org.SSID) {
       var sid = data.org.SSID;
       service.orgs[data.org.SSID] = data.org;
       data.org = sid;

@@ -1,4 +1,4 @@
-var controller = ['$scope', 'MainAPI', 'UsersAPI', '$q', '$element', '$timeout', function($scope, MainAPI, UsersAPI, $q, $element, $timeout) {
+var controller = ['$scope', 'MainAPI', 'UsersAPI', '$q', '$element', '$timeout','SettingsAPI', function($scope, MainAPI, UsersAPI, $q, $element, $timeout, SettingsAPI) {
 
   $timeout(function(){
     $scope.handleHandle();
@@ -8,6 +8,7 @@ var controller = ['$scope', 'MainAPI', 'UsersAPI', '$q', '$element', '$timeout',
   var readyToListen = 0;
   $scope.hasActivity = false;
 
+  $scope.settings = SettingsAPI.settings;
 
 
   getApiData = function() {
@@ -33,28 +34,37 @@ var controller = ['$scope', 'MainAPI', 'UsersAPI', '$q', '$element', '$timeout',
         // Check for a member activity already there.
         var hasActivity = $(root).find('.member-inner .member-activity').html() ? true : false;
 
-        console.log("has activity");
-        console.log(hasActivity);
         // At this point we *will* change the dom, so we're not ready to listen.
         readyToListen--;
 
         // If has vanilla activity, add handle
-        if(hasActivity && !($(root).find('.member-activity .scfr-handle').html() ? true : false)) $(root).find('.member-inner .member-activity').prepend("<span class='scfr-handle'>["+$scope.currentUser.handle+"] </span>");
+        if(hasActivity && !($(root).find('.member-activity .scfr-handle').html() ? true : false))
+        $scope.$parent.addDirective({
+          elem: $(root).find('.member-inner .member-activity'),
+          directive: "<scfr-span-handle handle='"+$scope.currentUser.handle+"'></scfr-span-handle>",
+          prepend: true,
+        });
         else {
           // Sanitize just to be sure
           readyToListen--;
           $(root).find('.member-activity .scfr-handle').remove();
 
           // Add our custom handle
-          $(root).find(".member-inner").append("<div class='member-activity'><span class='scfr-handle'>["+$scope.currentUser.handle+"] </span></div>");
+          $scope.$parent.addDirective({
+            elem: $(root).find('.member-inner'),
+            directive: "<div class='member-activity'><scfr-span-handle handle='"+$scope.currentUser.handle+"'></scfr-span-handle></div>",
+          });
       }
     }
 
   };
 
+  $scope.clickHandle = function($event) {
+    $event.stopPropagation();
+  };
+
   $scope.$on("memberActivity", function(event, user_id) {
     if(user_id == $scope.user) {
-      console.log("LISTENED!"+readyToListen);
       if(readyToListen < 0) readyToListen++;
       //else $scope.memberActivityChanged();
 

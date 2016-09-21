@@ -19,7 +19,7 @@ SCFRFindReact.findReact = function(elem) {
   return null;
 };
 
-// findReact
+// getProps
 // Takes a dom element and tries to return its properties
 // @param elem a dom element
 // @return properties object or null
@@ -27,4 +27,16 @@ SCFRFindReact.getProps = function(elem) {
   var react = SCFRFindReact.findReact(elem);
   if(react) return react.props;
   return null;
+};
+
+// updateComponent
+// Forces update on a React Component
+// @param elem a dom element or react component
+// @return {boolean} whever the component was updated or not.
+SCFRFindReact.updateComponent = function(elem) {
+  var getType = {};
+  if(elem && elem.updater && elem.updater.enqueueForceUpdate && getType.toString.call(elem.updater.enqueueForceUpdate) === '[object Function]')
+    elem.updater.enqueueForceUpdate(elem);
+  else if(elem) return SCFRFindReact.updateComponent(SCFRFindReact.findReact(elem));
+  else return false;
 };

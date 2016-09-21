@@ -1,12 +1,13 @@
 require("script!../vendor/angular.min.js");
 require("script!../vendor/angular-cookies.min.js");
 
-window.SCFR_API = "https://c303f385.ngrok.io/wp-json/";
+window.SCFR_API = "https://5d8ce93c.ngrok.io/wp-json/";
 app = angular.module('scfr', []);
 
 app.service('MainAPI', require("exports?service!./service/API.js"));
 app.service('UsersAPI', require("exports?service!./service/Users.js"));
 app.service('SettingsAPI', require("exports?service!./service/Settings.js"));
+app.service('DiscordChannelAPI', require("exports?service!./service/Discord/channel.js"));
 
 app.controller('modal-login', require("exports?controller!./controller/modal-login.js"));
 app.controller('modal-logout', require("exports?controller!./controller/modal-logout.js"));
@@ -34,10 +35,10 @@ app.directive("scfrSettingsCheckbox", require("exports?directive!./directive/set
 app.directive("scfrSettingsControlGroup", require("exports?directive!./directive/settings/control-group.js"));
 app.directive("scfrChannelMemberUser", require("exports?directive!./directive/member-list/channel-members-user.js"));
 app.directive("scfrChannelMemberSearch", require("exports?directive!./directive/member-list/channel-members-search.js"));
+app.directive("scfrSpanHandle", require("exports?directive!./directive/member-list/span-handle.js"));
 
 
 app.controller('scfr_main', ['$scope', '$compile', 'MainAPI', '$q', function($scope, $compile, MainAPI, $q) {
-  console.log("loaded controller");
   var modal_parent = $("[ng-controller='scfr_main'] > div > span:not(.incoming-calls)");
 
   $scope.api = MainAPI;
@@ -85,10 +86,15 @@ app.controller('scfr_main', ['$scope', '$compile', 'MainAPI', '$q', function($sc
 
           if(args.force !== true) stockElement(newElement);
 
-          $(args.elem).append( newElement );
+          if(args.prepend) $(args.elem).prepend( newElement );
+          else $(args.elem).append( newElement );
         }
       });
     }
+  };
+
+  $scope.channelChanged = function() {
+
   };
 
   $scope.popOutLoggin = function() {
@@ -126,7 +132,6 @@ app.controller('scfr_main', ['$scope', '$compile', 'MainAPI', '$q', function($sc
 
   $scope.broadcast = function(p) {
     if(p.event) {
-
       $q.when(shouldAddDirective()).then(function(isConnected) {
         if(isConnected || args.force) $scope.$broadcast(p.event, p.args);
       });
@@ -138,7 +143,6 @@ app.controller('scfr_main', ['$scope', '$compile', 'MainAPI', '$q', function($sc
 
 
 angular.element(document).ready(function() {
-  console.log("angular ok");
   angular.bootstrap(document, ['scfr']);
 });
 

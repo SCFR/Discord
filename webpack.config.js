@@ -20,7 +20,7 @@ module.exports = {
     },
     plugins: [
       new webpack.BannerPlugin('var StarCitizenFR = function(){};', {raw:true}),
-      //new webpack.optimize.UglifyJsPlugin({compress:true}),
+      new webpack.optimize.UglifyJsPlugin({compress:true}),
       new webpack.BannerPlugin('//META{"name":"StarCitizenFR"}*//', {raw:true}),
     ],
 };

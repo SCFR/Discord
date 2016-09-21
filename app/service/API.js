@@ -22,7 +22,6 @@ var service = ['$http', '$q', function($http, $q) {
     $q.when(service.user.isConnected, function() {
       if(service.user.isConnected === true) {
         var p   = $http.get(url,{params:{'scfr-token': service.scfrToken}}).then( function(data) {
-          console.log(data.data);
           if(data.data.error === false) service.user.info = data.data.msg;
         });
 
@@ -47,11 +46,8 @@ var service = ['$http', '$q', function($http, $q) {
   };
 
   service.logOut = function() {
-    console.log("logout");
     if($.removeCookie("scfr-token", {path: '/'})) {
       service.user = angular.copy(defaultUser);
-        console.log("is ok");
-          console.log(service.user);
       return true;
     }
     return false;
@@ -75,7 +71,6 @@ var service = ['$http', '$q', function($http, $q) {
   };
 
   init = function() {
-    console.log("SCFR API init");
     handleAuth();
   };
 

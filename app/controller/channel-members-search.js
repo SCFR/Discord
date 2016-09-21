@@ -1,9 +1,14 @@
-var controller = ['$scope', 'MainAPI', 'UsersAPI', '$q', '$element', '$timeout', function($scope, MainAPI, UsersAPI, $q, $element, $timeout) {
-  var react = SCFRFindReact.findReact($($element).parent());
-  var props = SCFRFindReact.getProps($($element).parent());
+var controller = ['$scope', '$q', 'DiscordChannelAPI', function($scope, $q, channel) {
 
-  var backup = angular.copy(react);
-  //props.user.username = "DDAA";
+  channel.init();
 
-  //react.render();
+  $scope.$watch("search", function(val) {
+    if(val === "") channel.resetSearch();
+    channel.searchMembers(val);
+  });
+
+  $scope.$on("channelChanged", function(e) {
+    channel.init();    
+  });
+
 }];

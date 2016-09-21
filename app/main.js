@@ -35,8 +35,8 @@ StarCitizenFR.prototype.memberActivity = function(elem, modifs) {
     return StarCitizenFR.prototype.callAngularFunction("scfr_main", "broadcast", {event: "memberActivity", args: user_id});
 };
 
-StarCitizenFR.prototype.appendDirective = function(elem, directive, force) {
-  return StarCitizenFR.prototype.callAngularFunction("scfr_main", "addDirective", {elem: elem, directive: directive, force: force});
+StarCitizenFR.prototype.appendDirective = function(elem, directive, force, prepend) {
+  return StarCitizenFR.prototype.callAngularFunction("scfr_main", "addDirective", {elem: elem, directive: directive, force: force, prepend: prepend});
 };
 
 StarCitizenFR.prototype.start = function () {
@@ -47,8 +47,7 @@ StarCitizenFR.prototype.start = function () {
 };
 
 StarCitizenFR.prototype.hookSearchBar = function() {
-  console.log(":( i'm so sad");
-  StarCitizenFR.prototype.appendDirective($('.channel-members-wrap'), "<scfr-channel-member-search></scfr-channel-member-search>");
+  StarCitizenFR.prototype.appendDirective($('.channel-members-wrap'), "<scfr-channel-member-search></scfr-channel-member-search>", false, true);
 };
 
 StarCitizenFR.prototype.appBootStrap = function() {
@@ -125,6 +124,7 @@ StarCitizenFR.prototype.observer = function (e) {
 
   ListenTo("added", StarCitizenFR.prototype.memberActivity , "div", false, "member-activity");
   ListenTo("removed", StarCitizenFR.prototype.memberActivity , "div", false, "member-activity");
+  if(modifs.target.classList.contains('title-wrap') || modifs.target.classList.contains('chat')) StarCitizenFR.prototype.callAngularFunction("scfr_main", "broadcast", {event: "channelChanged"});
 
   $.each(listenedElems, function(index, listener) {
 

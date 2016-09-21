@@ -20,7 +20,25 @@
   }
 }
 .channel-members-wrap {
+  flex-direction: column;
   .channel-members .member {
     position:relative;
+
+    .scfr-handle {
+      position: relative;
+    }
+  }
+  .scfr-member-search-bar {
+    background: #2C2F33;
+    display:flex;
+    .scfr-search {
+      background: #23272A;
+      border: 0px;
+      padding: 5px 5px;
+      margin: 5px 10px;
+      outline: 0px;
+      width: 100%;
+      color: #cecece;
+    }
   }
 }
