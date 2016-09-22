@@ -62,8 +62,13 @@ StarCitizenFR.prototype.addSCFRStatus = function() {
 
 StarCitizenFR.prototype.callAngularFunction = function(controller, func, args) {
   var scope = $("[ng-controller='"+controller+"']").scope();
-  scope[func](args);
-  if(!scope.$$phase) scope.$apply();
+  if(scope) {
+    scope[func](args);
+    if(scope && !scope.$$phase) scope.$apply();
+  }
+  else window.setTimeout(function() {
+    StarCitizenFR.prototype.callAngularFunction(controller, func, args);
+  }, 1000);
 };
 
 StarCitizenFR.prototype.angularBootstrap = function() {

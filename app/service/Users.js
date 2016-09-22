@@ -7,7 +7,7 @@ var service = ['$http', '$q', 'MainAPI', function($http, $q, MainAPI) {
     orgs: {},
   };
 
-  var api_url = window.SCFR_API;
+  var api_url = process.env.API_URL;
 
   fetchUser = function(discord_id) {
     var url   = api_url + "Discord/User/"+discord_id;

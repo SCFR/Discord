@@ -1,7 +1,7 @@
 var service = ['$http', '$q', function($http, $q) {
   var service = {};
 
-  var api_url = window.SCFR_API;
+  var api_url = process.env.API_URL;
   service.user = {
     "isConnected": false,
     "info": {},
@@ -66,7 +66,6 @@ var service = ['$http', '$q', function($http, $q) {
       service.getUserInfo();
     }
     else {
-
     }
   };
 

@@ -1,4 +1,5 @@
 var webpack = require("webpack");
+var WebpackShellPlugin = require('webpack-shell-plugin');
 
 
 module.exports = {
@@ -8,7 +9,7 @@ module.exports = {
       __dirname: true,
     },
     output: {
-        path: 'C:\\Users\\david\\AppData\\Roaming\\BetterDiscord\\plugins\\',
+        path: __dirname + "/dist/win",
         filename: "StarCitizenFR.plugin.js",
         //libraryTarget: "var",
         //library: "StarCitizenFR",
@@ -20,13 +21,14 @@ module.exports = {
     },
     plugins: [
       new webpack.BannerPlugin('var StarCitizenFR = function(){};', {raw:true}),
-      //new webpack.optimize.UglifyJsPlugin({compress:true}),
+      new webpack.optimize.UglifyJsPlugin({compress:true}),
       new webpack.BannerPlugin('//META{"name":"StarCitizenFR"}*//', {raw:true}),
       new webpack.DefinePlugin({
         'process.env':{
-          'NODE_ENV': JSON.stringify('dev'),
-          'API_URL': JSON.stringify('https://5b3bdab3.ngrok.io/wp-json/')
+          'NODE_ENV': JSON.stringify('production'),
+          'API_URL': JSON.stringify('https://www.starcitizen.fr/wp-json/')
         }
       }),
+      new WebpackShellPlugin({onBuildEnd: ['prod.bat']}),
     ],
 };

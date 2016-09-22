@@ -1,7 +1,6 @@
 require("script!../vendor/angular.min.js");
 require("script!../vendor/angular-cookies.min.js");
 
-window.SCFR_API = "https://5d8ce93c.ngrok.io/wp-json/";
 app = angular.module('scfr', []);
 
 app.service('MainAPI', require("exports?service!./service/API.js"));
@@ -61,6 +60,7 @@ app.controller('scfr_main', ['$scope', '$compile', 'MainAPI', '$q', function($sc
   });
 
   shouldAddDirective = function() {
+    // user.isConnected est TOUJOURS un bool, jamais une promise dans l'exemple actuel vu que j'essaye pas de me connecter.
     return $scope.api.user.isConnected;
   };
 
@@ -80,12 +80,13 @@ app.controller('scfr_main', ['$scope', '$compile', 'MainAPI', '$q', function($sc
 
   $scope.addDirective = function(args) {
     if(args.elem && args.directive) {
+      // Il rentre ici
       $q.when(shouldAddDirective()).then(function(isConnected) {
+        // Il arrive jamais ici
         if(isConnected || args.force) {
           var newElement = $compile( args.directive )( $scope );
 
           if(args.force !== true) stockElement(newElement);
-
           if(args.prepend) $(args.elem).prepend( newElement );
           else $(args.elem).append( newElement );
         }
@@ -133,11 +134,10 @@ app.controller('scfr_main', ['$scope', '$compile', 'MainAPI', '$q', function($sc
   $scope.broadcast = function(p) {
     if(p.event) {
       $q.when(shouldAddDirective()).then(function(isConnected) {
-        if(isConnected || args.force) $scope.$broadcast(p.event, p.args);
+        if(isConnected || (p.args && p.args.force)) $scope.$broadcast(p.event, p.args);
       });
     }
   };
-
 
 }]);
 

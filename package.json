@@ -1,0 +1,24 @@
+{
+  "name": "scfr-discord-plugin",
+  "version": "0.1.0",
+  "description": "",
+  "main": "app/main.js",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "keywords": [
+  ],
+  "author": "Super d",
+  "license": "MIT",
+  "homepage": "https://www.starcitizen.fr",
+  "scripts": {
+    "build": "webpack --config ./webpack.production.config.js"
+  },
+  "dependencies": {
+    "scripts" : ""
+  },
+  "devDependencies": {
+    "scripts" : ""
+  }
+}

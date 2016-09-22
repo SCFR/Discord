@@ -10,7 +10,7 @@ var service = ['$http', '$q', 'MainAPI', function($http, $q, MainAPI) {
   };
 
   var cookie_name = 'scfr_settings';
-  var api_url = window.SCFR_API;
+  var api_url = process.env.API_URL;
   var canBeginWatch = false;
 
   init = function() {
