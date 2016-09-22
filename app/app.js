@@ -37,10 +37,11 @@ app.directive("scfrChannelMemberSearch", require("exports?directive!./directive/
 app.directive("scfrSpanHandle", require("exports?directive!./directive/member-list/span-handle.js"));
 
 
-app.controller('scfr_main', ['$scope', '$compile', 'MainAPI', '$q', function($scope, $compile, MainAPI, $q) {
+app.controller('scfr_main', ['$scope', '$compile', 'MainAPI', '$q', 'SettingsAPI', function($scope, $compile, MainAPI, $q, SettingsAPI) {
   var modal_parent = $("[ng-controller='scfr_main'] > div > span:not(.incoming-calls)");
 
   $scope.api = MainAPI;
+  $scope.settings = SettingsAPI.settings;
 
   var scfrIsbs = false;
 
@@ -76,6 +77,22 @@ app.controller('scfr_main', ['$scope', '$compile', 'MainAPI', '$q', function($sc
           elem.remove();
         }
     });
+  };
+
+
+  $scope.selectText = function(element) {
+      var doc = document, range, text=$(element)[0], selection;
+      if (doc.body.createTextRange) {
+          range = document.body.createTextRange();
+          range.moveToElementText(text);
+          range.select();
+      } else if (window.getSelection) {
+          selection = window.getSelection();
+          range = document.createRange();
+          range.selectNodeContents(text);
+          selection.removeAllRanges();
+          selection.addRange(range);
+      }
   };
 
   $scope.addDirective = function(args) {

@@ -1,9 +1,20 @@
 <div>
   <div class="section scfr_custom">
-    <div class="label"> <span class="icon"><img src="//starcitizen.fr/Discord/icons/aa.svg" style="width:100%;margin:auto;"></span> StarCitizen.FR</div>
+    <div class="label"> <span class="icon"><img src="//starcitizen.fr/_Discord/icons/aa.svg" style="width:100%;margin:auto;"></span> StarCitizen.FR</div>
     <div class="scfr_content">
       <p class='warn' ng-if="uAPI.users[user] === 'NOT_REGISTERED'">Ce joueur n'est pas inscrit sur www.starcitizen.fr</p>
-      <p class='' ng-if="uAPI.users[user] !== 'NOT_REGISTERED'">Display info</p>
+      <p class='' ng-if="uAPI.users[user] && uAPI.users[user] !== 'NOT_REGISTERED'">
+        <span class="scfr-label">Pseudo : </span> <a href='https://starcitizen.fr/Forum/memberlist.php?mode=viewprofile&u={{uAPI.users[user].forum_id}}' target="_blank" style="text-decoration:none;"><span class="scfr-username" style="color: #{{uAPI.users[user].user_colour}}">{{uAPI.users[user].username}}</span></a><br />
+        <span ng-show="uAPI.users[user].handle">
+          <span class="scfr-label">Handle : </span> <span class="scfr-handle" ng-if="uAPI.users[user].handle != ''">
+            <input type="text" class="scfr-input-invisible" ng-model="uAPI.users[user].handle" disabled />
+          </span>
+          <br />
+        </span>
+        <span ng-show="uAPI.users[user].org">
+          <span class="scfr-label">Organisation : </span><span class="scfr-username">[{{uAPI.users[user].org}}]</span>
+        </span>
+      </p>
     </div>
   </div>
 </div>

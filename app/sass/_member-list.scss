@@ -26,6 +26,10 @@
 
     .scfr-handle {
       position: relative;
+      z-index:10;
+      cursor:text;
+      -webkit-user-select:text;
+      user-select:text;
     }
   }
   .scfr-member-search-bar {

@@ -4,11 +4,22 @@ var directive = function() {
     restrict:'E',
     scope: {
       handle:'@',
-      settings:'@',
     },
-    replace: true,
     controller: [ "$scope", function($scope) {
       $scope.settings = $scope.$parent.settings;
+      $scope.selectText = $scope.$parent.selectText;
+      
+      $scope.clickHandle = function($event) {
+        var target;
+
+        if($(event.target).is(".scfr-actual-handle")) target = $($event.target)[0];
+        else target = $($event.target).find(".scfr-actual-handle")[0];
+
+        $scope.selectText(target);
+        $event.stopImmediatePropagation();
+      };
+
     }],
+    replace: true,
   };
 };

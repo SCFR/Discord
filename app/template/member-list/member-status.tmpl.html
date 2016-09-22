@@ -1,5 +1,5 @@
 <div class='scfr-member-status'>
-  <div ng-if="currentOrg && settings.displayOrg" class="scfr-org-logo">
+  <div ng-if="currentOrg && settings.displayOrg" class="scfr-org-logo" ng-click="popOutOrg(currentOrg, $event)">
     <img src="{{currentOrg.logo}}">
   </div>
 </div>

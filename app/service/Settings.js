@@ -14,7 +14,6 @@ var service = ['$http', '$q', 'MainAPI', function($http, $q, MainAPI) {
   var canBeginWatch = false;
 
   init = function() {
-    $.cookie.json = true;
     var cookie = $.cookie(cookie_name);
 
     if(cookie) {

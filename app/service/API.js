@@ -59,6 +59,7 @@ var service = ['$http', '$q', function($http, $q) {
   };
 
   handleAuth = function() {
+    $.cookie.json = true;
     var cookie = $.cookie("scfr-token");
     if(cookie) {
       service.scfrToken = cookie;
