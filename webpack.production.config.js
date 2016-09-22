@@ -9,7 +9,7 @@ module.exports = {
       __dirname: true,
     },
     output: {
-        path: __dirname + "/dist/win",
+        path: __dirname + "/installer/node/StarCitizenFR/lib/",
         filename: "StarCitizenFR.plugin.js",
         //libraryTarget: "var",
         //library: "StarCitizenFR",
@@ -22,7 +22,6 @@ module.exports = {
     plugins: [
       new webpack.BannerPlugin('var StarCitizenFR = function(){};', {raw:true}),
       new webpack.optimize.UglifyJsPlugin({compress:true}),
-      new webpack.BannerPlugin('//META{"name":"StarCitizenFR"}*//', {raw:true}),
       new webpack.DefinePlugin({
         'process.env':{
           'NODE_ENV': JSON.stringify('production'),

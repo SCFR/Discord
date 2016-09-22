@@ -42,6 +42,7 @@ StarCitizenFR.prototype.appendDirective = function(elem, directive, force, prepe
 StarCitizenFR.prototype.start = function () {
   StarCitizenFR.prototype.angularBootstrap();
   StarCitizenFR.prototype.addSCFRStatus();
+  StarCitizenFR.prototype.initObserver();
 
   //StarCitizenFR.prototype.appBootStrap();
 };
@@ -71,26 +72,45 @@ StarCitizenFR.prototype.callAngularFunction = function(controller, func, args) {
   }, 1000);
 };
 
-StarCitizenFR.prototype.angularBootstrap = function() {
-  $("#app-mount").attr("ng-controller", "scfr_main");
-  StarCitizenFR.$app = require("./app.js").app;
+StarCitizenFR.prototype.init = function() {
+  StarCitizenFR.prototype.handleBetterDiscord();
 };
 
-StarCitizenFR.prototype.load = function () {
+StarCitizenFR.prototype.handleBetterDiscord = function() {
+  function defer() {
+    if (window.jQuery) StarCitizenFR.prototype.start();
+    else setTimeout(function() { defer(); }, 50);
+  }
+
+  function loadScript(url, callback) {
+    var script = document.createElement("script");
+      script.type = "text/javascript";
+
+        if (script.readyState) { //IE
+            script.onreadystatechange = function () {
+                if (script.readyState == "loaded" || script.readyState == "complete") {
+                    script.onreadystatechange = null;
+                    callback();
+                }
+            };
+        } else { //Others
+            script.onload = function () {
+                callback();
+            };
+        }
+
+        script.src = url;
+        document.getElementsByTagName("head")[0].appendChild(script);
+    }
+
+    if(typeof bdVersion !== "undefined") betterDiscord = true;
+    else betterDiscord = false;
+
+  if(!betterDiscord) loadScript("https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js", function () { StarCitizenFR.prototype.start(); });
+  else defer();
 
 };
 
-StarCitizenFR.prototype.unload = function () {};
-
-StarCitizenFR.prototype.stop = function () {};
-
-StarCitizenFR.prototype.onMessage = function () {
-  //called when a message iaaa received
-};
-
-StarCitizenFR.prototype.onSwitch = function () {
-  //called when a saerver or channel is switched
-};
 
 StarCitizenFR.prototype.observer = function (e) {
   //raw MutationObserver event for each mutation
@@ -145,8 +165,22 @@ StarCitizenFR.prototype.observer = function (e) {
 //div.member-activity
 };
 
-StarCitizenFR.prototype.getSettingsPanel = function () {
-  return "Settings Panel";
+StarCitizenFR.prototype.initObserver = function() {
+  mainObserver = new MutationObserver(function (mutations) {
+    mutations.forEach(function (mutation) {
+      if (typeof StarCitizenFR.prototype.observer !== "undefined") StarCitizenFR.prototype.observer(mutation);
+    });
+  });
+
+  mainObserver.observe(document, {
+    childList: true,
+    subtree: true
+  });
+};
+
+StarCitizenFR.prototype.angularBootstrap = function() {
+  $("#app-mount").attr("ng-controller", "scfr_main");
+  StarCitizenFR.$app = require("./app.js").app;
 };
 
 StarCitizenFR.prototype.getName = function () {

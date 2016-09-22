@@ -1,7 +1,7 @@
 require("script!../vendor/angular.min.js");
 require("script!../vendor/angular-cookies.min.js");
 
-app = angular.module('scfr', []);
+app = angular.module('scfr', ["ngCookies"]);
 
 app.service('MainAPI', require("exports?service!./service/API.js"));
 app.service('UsersAPI', require("exports?service!./service/Users.js"));

@@ -1,6 +1,6 @@
 // MAIN SETTINGS SERVICE
 // HOLDS SC.FR INFORMATION FOR ALL DISCORD USER ACROSS SERVERS.
-var service = ['$http', '$q', 'MainAPI', function($http, $q, MainAPI) {
+var service = ['$http', '$q', 'MainAPI', '$cookies', function($http, $q, MainAPI, $cookies) {
 
   var service = {
     settings: {
@@ -14,8 +14,7 @@ var service = ['$http', '$q', 'MainAPI', function($http, $q, MainAPI) {
   var canBeginWatch = false;
 
   init = function() {
-    var cookie = $.cookie(cookie_name);
-
+    var cookie = $cookies.getObject(cookie_name);
     if(cookie) {
       service.settings = cookie;
     }
@@ -27,7 +26,7 @@ var service = ['$http', '$q', 'MainAPI', function($http, $q, MainAPI) {
   };
 
   service.setCurrentCookie = function() {
-    $.cookie(cookie_name, service.settings, { expires: 3650, path: '/' });
+    $cookies.putObject(cookie_name, service.settings, {path: '/'});
   };
 
   service.getSetting = function(settingName) {

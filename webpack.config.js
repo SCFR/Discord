@@ -7,25 +7,25 @@ module.exports = {
     node: {
       __dirname: true,
     },
+    externals: "betterdiscord",
     output: {
-        path: 'C:\\Users\\david\\AppData\\Roaming\\BetterDiscord\\plugins\\',
+        path: 'C:/Users/David/AppData/Local/Discord/app-0.0.296/resources/node_modules/StarCitizenFR/lib',
         filename: "StarCitizenFR.plugin.js",
         //libraryTarget: "var",
         //library: "StarCitizenFR",
     },
     module: {
         loaders: [
-            { test: /\.css$/, loader: "style!css" }
+            { test: /\.css$/, loader: "style!css" },
         ]
     },
     plugins: [
       new webpack.BannerPlugin('var StarCitizenFR = function(){};', {raw:true}),
       //new webpack.optimize.UglifyJsPlugin({compress:true}),
-      new webpack.BannerPlugin('//META{"name":"StarCitizenFR"}*//', {raw:true}),
       new webpack.DefinePlugin({
         'process.env':{
           'NODE_ENV': JSON.stringify('dev'),
-          'API_URL': JSON.stringify('https://5b3bdab3.ngrok.io/wp-json/')
+          'API_URL': JSON.stringify('https://www.starcitizen.fr/wp-json/')
         }
       }),
     ],

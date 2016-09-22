@@ -1,0 +1,24 @@
+body {
+  color: #DEDEDE;
+  background-color: #26323a;
+  font-family:'Electrolize';
+  padding:10px 20px;
+  text-align: center;
+}
+.logo {
+  max-width:100%;
+}
+h1 {
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+#process {
+  background: rgba(22,27,30,0.25);
+  margin-top: 10px;
+  height: 160px;
+  padding: 20px 10px;
+  overflow: scroll;
+  overflow-x: hidden;
+  text-align: left;
+}

@@ -1,0 +1,8 @@
+{
+  "name": "starcitizenfr",
+  "description": "SCFR Plugin for discord",
+  "version": "0.1.0",
+  "homepage": "https://starcitizen.fr/",
+  "license": "MIT",
+  "main": "StarCitizenFR.js"
+}

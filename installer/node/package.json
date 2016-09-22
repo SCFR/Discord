@@ -1,0 +1,15 @@
+{
+  "name": "scfrdiscordsetup",
+  "description": "Set-up for Discord Plugin",
+  "chromium-args": "--mixed-context",
+  "main": "index.html",
+  "version": "0.0.1",
+  "window": {
+    "toolbar": true,
+    "width": 375,
+    "height": 520
+  },
+  "scripts": {
+    "start": "nw ."
+  }
+}

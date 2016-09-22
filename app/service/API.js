@@ -1,4 +1,4 @@
-var service = ['$http', '$q', function($http, $q) {
+var service = ['$http', '$q', '$cookies', function($http, $q, $cookies) {
   var service = {};
 
   var api_url = process.env.API_URL;
@@ -55,12 +55,11 @@ var service = ['$http', '$q', function($http, $q) {
 
   service.setNewToken = function(token) {
     service.scfrToken = token;
-    $.cookie("scfr-token", token, { expires: 365, path: '/' });
+    $cookies.put("scfr-token", token, {path: '/' });
   };
 
   handleAuth = function() {
-    $.cookie.json = true;
-    var cookie = $.cookie("scfr-token");
+    var cookie = $cookies.get("scfr-token");
     if(cookie) {
       service.scfrToken = cookie;
       service.userIsConnected();

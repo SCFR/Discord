@@ -10,11 +10,11 @@
     "default_popup": "static/popup.html"
   },
   "permissions": [],
-
+  
   "content_scripts": [
   {
     "matches": ["https://discordapp.com/*"],
-    "js": ["js/jquery.js", "js/cookie.js", "StarCitizenFR.plugin.js", "js/main.js"]
+    "js": ["StarCitizenFR.plugin.js", "js/main.js"]
   }
 ]
 }
