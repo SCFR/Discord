@@ -51,10 +51,10 @@ instal = function() {
           betterDiscord = true;
         }
 
-        if(fs.existsSync(_discord_path + "/node_modules/StarCitizenFR")) {
-           print_output("Deleting " + _discord_path + "/node_modules/StarCitizenFR" + " folder.");
-           wrench.rmdirSyncRecursive(_discord_path + "/node_modules/StarCitizenFR");
-           print_output("Deleted " + _discord_path + "/node_modules/StarCitizenFR" + " folder.");
+        if(fs.existsSync(_discord_path + _appFolder + "/node_modules/StarCitizenFR")) {
+           print_output("Deleting " + _discord_path + _appFolder + "/node_modules/StarCitizenFR" + " folder.");
+           wrench.rmdirSyncRecursive(_discord_path + _appFolder + "/node_modules/StarCitizenFR");
+           print_output("Deleted " + _discord_path + _appFolder + "/node_modules/StarCitizenFR" + " folder.");
        }
 
        if(!betterDiscord) {
@@ -75,8 +75,8 @@ instal = function() {
 
        print_output("Copying Plugin");
        //fs.mkdirSync(_discord_path + "/node_modules");
-       fs.mkdirSync(_discord_path + "/node_modules/StarCitizenFR");
-       wrench.copyDirSyncRecursive(__dirname + "/StarCitizenFR/", _discord_path + "/node_modules/StarCitizenFR", {forceDelete: true});
+       fs.mkdirSync(_discord_path + _appFolder + "/node_modules/StarCitizenFR");
+       wrench.copyDirSyncRecursive(__dirname + "/StarCitizenFR/", _discord_path + _appFolder + "/node_modules/StarCitizenFR", {forceDelete: true});
 
 
       fs.exists(_discord_path + _appFolder, function(exists) {
